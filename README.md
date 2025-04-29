@@ -9,17 +9,12 @@ A2A は、異なるエージェント間でのコミュニケーションを可�
 ## 前提条件
 
 - Docker
-- Google AI Studio API キー（または Vertex AI の認証情報）
+- Docker Compose
+- Google AI Studio API キー
 
 ## 使用方法
 
-### 1. Docker イメージのビルド
-
-```bash
-docker build -t a2a-demo .
-```
-
-### 2. 環境変数の設定
+### 1. 環境変数の設定
 
 `.env.sample` ファイルを `.env` にコピーし、実際の API キーを設定します。
 
@@ -29,15 +24,28 @@ cp .env.sample .env
 
 `.env` ファイルを編集して、`your_api_key_here` を実際の Google API キーに置き換えてください。
 
-### 3. コンテナの実行
+### 2. コンテナの起動
+
+以下のコマンドを実行して、Docker Compose でコンテナをビルドし、起動します。
 
 ```bash
-docker run -it --rm -p 12000:12000 -v ${pwd}/.env:/app/demo/ui/.env a2a-demo
+docker-compose up --build -d
 ```
+`-d` オプションを外すと、ログがターミナルに表示されます。
 
-### 4. アプリケーションへのアクセス
+### 3. アプリケーションへのアクセス
 
 ブラウザで http://localhost:12000 を開いてデモアプリケーションにアクセスします。
+
+### 4. アプリケーションへのサンプルエージェントの追加
+
+以下のURLで追加してください。
+
+demo_uiサービスから各エージェントサービスへ直接通信しますので、それぞれ到達可能なアドレスを指定する必要があります。
+
+- crewai_agent = 192.168.100.3:8080
+- google_adk_agent = 192.168.100.4:8080
+- langgraph_agent = 192.168.100.5:8080
 
 ## A2A デモアプリケーションの機能
 
